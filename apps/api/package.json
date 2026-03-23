@@ -1,0 +1,18 @@
+{
+  "name": "@octo-portfolio/api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev --port 4000",
+    "preview": "node .output/server/index.mjs",
+    "lint": "eslint . --ext .js --fix",
+    "clean": "rm -rf .nitro .output dist"
+  },
+  "dependencies": {
+    "nitropack": "^2.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.18.0"
+  }
+}

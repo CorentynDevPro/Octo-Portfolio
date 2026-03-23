@@ -1,0 +1,60 @@
+# ============================================================
+# docker-compose.dev.yml – Development (hot-reload)
+# Usage: docker compose -f docker-compose.dev.yml up
+# ============================================================
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: builder
+    image: octo-portfolio-web:dev
+    container_name: octo-portfolio-web-dev
+    command: pnpm --filter @octo-portfolio/web dev
+    volumes:
+      - ./apps/web:/app/apps/web
+      - web_node_modules:/app/node_modules
+      - web_app_node_modules:/app/apps/web/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - NUXT_PUBLIC_API_BASE=http://localhost:4000
+      - NUXT_PUBLIC_GITHUB_USERNAME=${NUXT_PUBLIC_GITHUB_USERNAME:-CorentynDevPro}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    networks:
+      - portfolio-dev-net
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: builder
+    image: octo-portfolio-api:dev
+    container_name: octo-portfolio-api-dev
+    command: pnpm --filter @octo-portfolio/api dev
+    volumes:
+      - ./apps/api:/app/apps/api
+      - api_node_modules:/app/node_modules
+      - api_app_node_modules:/app/apps/api/node_modules
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - ALLOWED_ORIGIN=http://localhost:3000
+    networks:
+      - portfolio-dev-net
+
+volumes:
+  web_node_modules:
+  web_app_node_modules:
+  api_node_modules:
+  api_app_node_modules:
+
+networks:
+  portfolio-dev-net:
+    driver: bridge

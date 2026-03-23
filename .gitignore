@@ -1,3 +1,16 @@
+# TurboRepo
+.turbo/
+
+# Vercel
+.vercel/
+
+# Nuxt
+.nuxt/
+.output/
+
+# Nitro
+.nitro/
+
 # Logs
 logs
 *.log

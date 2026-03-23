@@ -1,0 +1,54 @@
+# ============================================================
+# docker-compose.yml – Production
+# Usage: docker compose up -d
+# ============================================================
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    image: octo-portfolio-web:latest
+    container_name: octo-portfolio-web
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - NUXT_PUBLIC_API_BASE=http://api:4000
+      - NUXT_PUBLIC_GITHUB_USERNAME=${NUXT_PUBLIC_GITHUB_USERNAME:-CorentynDevPro}
+      - NUXT_PUBLIC_SITE_URL=${NUXT_PUBLIC_SITE_URL:-https://your-domain.com}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - portfolio-net
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: octo-portfolio-api:latest
+    container_name: octo-portfolio-api
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - ALLOWED_ORIGIN=${NUXT_PUBLIC_SITE_URL:-https://your-domain.com}
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:4000/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - portfolio-net
+
+networks:
+  portfolio-net:
+    driver: bridge

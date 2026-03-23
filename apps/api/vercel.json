@@ -1,0 +1,17 @@
+{
+  "framework": null,
+  "buildCommand": "cd ../.. && pnpm --filter @octo-portfolio/api build",
+  "outputDirectory": ".output",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "functions": {
+    "src/routes/**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/"
+    }
+  ]
+}

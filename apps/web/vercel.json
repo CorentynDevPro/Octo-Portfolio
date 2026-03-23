@@ -1,0 +1,10 @@
+{
+  "framework": "nuxtjs",
+  "buildCommand": "cd ../.. && pnpm --filter @octo-portfolio/web build",
+  "outputDirectory": ".output",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+  "devCommand": "pnpm dev",
+  "env": {
+    "NUXT_PUBLIC_GITHUB_USERNAME": "CorentynDevPro"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@octo-portfolio/ui",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared UI components for Octo-Portfolio",
+  "main": "./index.js",
+  "scripts": {
+    "lint": "eslint . --ext .vue,.js --fix"
+  }
+}
