@@ -2,8 +2,10 @@
  * Nitro config for the standalone API server.
  * @see https://nitro.build/config
  */
+import { defineNitroConfig } from 'nitropack/config'
+
 export default defineNitroConfig({
-  srcDir: 'src',
+  compatibilityDate: '2024-04-03',
   output: {
     dir: '.output',
     serverDir: '.output/server',

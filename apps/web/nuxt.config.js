@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   // Modules
-  modules: ['@nuxt/content', '@nuxtjs/google-fonts', '@nuxt/eslint'],
+  modules: ['@nuxt/content', '@nuxtjs/google-fonts'],
 
   // Google Fonts
   googleFonts: {
@@ -40,6 +40,9 @@ export default defineNuxtConfig({
     },
     display: 'swap',
     preconnect: true,
+    // Use CDN link injection — avoids blocking dev server startup
+    // if fonts.googleapis.com is unreachable (CI / offline envs)
+    download: false,
   },
 
   // Runtime config

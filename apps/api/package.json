@@ -10,7 +10,7 @@
     "clean": "rm -rf .nitro .output dist"
   },
   "dependencies": {
-    "nitropack": "^2.10.4"
+    "nitropack": "^2.13.0"
   },
   "devDependencies": {
     "eslint": "^9.18.0"

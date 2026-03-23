@@ -286,6 +286,38 @@ The design combines:
 
 ---
 
+## 🔧 Troubleshooting
+
+### `apps/api` dev server – `Expected ';', got 'ident'` Rollup error
+
+**Symptom:** Running `pnpm dev` (or `pnpm --filter @octo-portfolio/api dev`) fails with:
+
+```
+Error: virtual:#nitro-internal-virtual/server-handlers (1:55): Expected ';', got 'ident'
+(Note that you need plugins to import files that are not JavaScript)
+```
+
+**Cause:** Nitro generates internal virtual modules that embed the **absolute file-system paths** of your route handlers as JavaScript string literals. If your project is located in a directory whose path contains a **single quote / apostrophe** (e.g. `~/Projects/Borne d'assistance/Octo-Portfolio`), the apostrophe breaks the generated string literal, producing an invalid JavaScript token.
+
+**Fix:** Move the project to a directory path that contains **no apostrophes or other special characters**:
+
+```bash
+# Bad  → /Users/you/Borne d'assistance/Octo-Portfolio
+# Good → /Users/you/Projects/Octo-Portfolio
+```
+
+### `apps/web` dev server – Google Fonts fetch error at startup
+
+**Symptom:** Nuxt dev server logs:
+
+```
+[error] [nuxt:google-fonts] [GET] "https://fonts.googleapis.com/css2?…": <no response> fetch failed
+```
+
+This error only occurs in offline/CI environments where `fonts.googleapis.com` is unreachable. The `@nuxtjs/google-fonts` module is already configured with `download: false`, which means it will inject a `<link>` tag at runtime (not download fonts during build). In a fully offline environment, fonts will fall back to the system sans-serif stack defined in the CSS.
+
+---
+
 ## 📄 License
 
 [MIT](./LICENSE) © CorentynDevPro

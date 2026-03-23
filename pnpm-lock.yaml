@@ -33,7 +33,7 @@ importers:
   apps/api:
     dependencies:
       nitropack:
-        specifier: ^2.10.4
+        specifier: ^2.13.0
         version: 2.13.2
     devDependencies:
       eslint:
